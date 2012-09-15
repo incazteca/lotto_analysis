@@ -4,7 +4,7 @@ class lotto:
     def __init__(self,tot_num,nums,date):
         self.game = 'lotto'
         self.total_numbers = tot_num
-        self.numbers = nums
+        self.numbers = list(nums)
         self.draw_date = date
 
     def get_nums():
