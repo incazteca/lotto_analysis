@@ -1,12 +1,17 @@
 #!/usr/bin/env python
 
+from datetime import date
+
 class lotto:
-    def __init__(self,tot_num,nums,date):
-        self.game = 'lotto'
+    def __init__(self,tot_num,nums,draw_date):
+        self.game = self.__class__.__name__
         self.total_numbers = tot_num
         self.numbers = list(nums)
-        self.draw_date = date
 
+        # Ensure that the draw date is a date object
+        self.draw_date = draw_date
+
+    # Accesors
     def get_nums():
         return self.nums
 
