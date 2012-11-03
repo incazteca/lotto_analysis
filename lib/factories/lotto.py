@@ -1,11 +1,14 @@
 #!/usr/bin/env python
 
+from datetime import date
 import json
 import lib.models.lotto
-import urllib2
 import os
+import urllib2
 
 class lotto_factory:
+
+    lotto_url_base = "http://www.illinoislottery.com/content/dam/ill/searchbyyear/";
 
     # Initialize the factory
 
@@ -14,21 +17,27 @@ class lotto_factory:
         self.data_dir = os.getcwd().split('/')
         return
 
+    # Retrieve lotto
+
     def retrieve_lotto (self,game_type):
         if self._lotto_game is None:
             self._lotto_game = game_type
 
-        results = self.retrieve_from_web()
-
+        results = self.retrieve_from_web_recent()
+        # Pull results that are only releveant to the game type
         #Massage results into json
-        json_results = results
+        #json.load(results)
+        return results 
 
-        return json_results
-
-    def retrieve_from_web(self):
-        lotto_url = "http://www.illinoislottery.com/content/dam/ill/searchbyyear/2012.json"
+    def retrieve_from_web_recent(self):
+        today = date.today()
+        lotto_url = lotto_url_base+year+".json"
         lotto_results = urllib2.Request(lotto_url)
         response = urllib2.urlopen(lotto_results)
+        return response.read()
+
+    def retrieve_from_web_year(self,year):
+        lotto_url = lotto_url_base+year+".json"
         return response.read()
    
     # Functions that do checks
