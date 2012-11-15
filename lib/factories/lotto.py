@@ -22,26 +22,38 @@ class lotto_factory:
     def retrieve_lotto (self,game_type):
         if self._lotto_game is None:
             self._lotto_game = game_type
+        
+        results = ''
+        
+        #FIXME maybe Im a python noob but it seems odd to me that I cannot
+        # get if (self._is_database_available) to work on its own. I have to
+        # specify is True. is that needed?
 
-        results = self.retrieve_from_web_recent()
+        if (self._is_database_available is True):
+            results = self.retrieve_from_db()
+        else:
+            results = self.retrieve_from_web_recent()
+
         # Pull results that are only releveant to the game type
         #Massage results into json
         #json.load(results)
         return results 
 
+    def retrieve_from_db(self):
+        return False
+
     def retrieve_from_web_recent(self):
         today = date.today()
-        lotto_url = lotto_url_base+year+".json"
+        year = today.year
+
+        lotto_url = self.lotto_url_base+str(year)+".json"
         lotto_results = urllib2.Request(lotto_url)
         response = urllib2.urlopen(lotto_results)
+
         return response.read()
 
-    def retrieve_from_web_year(self,year):
-        lotto_url = lotto_url_base+year+".json"
-        return response.read()
-   
     # Functions that do checks
 
     def _is_database_available(self):
         # flesh out this function later
-        return false
+        return False
