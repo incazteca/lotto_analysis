@@ -25,19 +25,20 @@ class lotto_factory:
         
         results = ''
         
-        #FIXME maybe Im a python noob but it seems odd to me that I cannot
-        # get if (self._is_database_available) to work on its own. I have to
-        # specify is True. is that needed?
-
-        if (self._is_database_available is True):
+        if (self._is_database_available()):
             results = self.retrieve_from_db()
         else:
             results = self.retrieve_from_web_recent()
 
         # Pull results that are only releveant to the game type
-        #Massage results into json
-        #json.load(results)
-        return results 
+        
+        lotto_result = []
+
+        for result in results:
+            if (result['col2'] == self._lotto_game):
+                lotto_result.append(result)
+
+        return lotto_result
 
     def retrieve_from_db(self):
         return False
@@ -48,9 +49,9 @@ class lotto_factory:
 
         lotto_url = self.lotto_url_base+str(year)+".json"
         lotto_results = urllib2.Request(lotto_url)
-        response = urllib2.urlopen(lotto_results)
+        json_result = json.loads(urllib2.urlopen(lotto_results).read())
 
-        return response.read()
+        return json_result
 
     # Functions that do checks
 

@@ -16,9 +16,10 @@ print "-"*5
 print "Test Factories"
 print "-"*5
 
-lotto_fact = lib.factories.lotto.lotto_factory('lotto');
-lot_json = lotto_fact.retrieve_lotto('lotto');
+lotto_fact = lib.factories.lotto.lotto_factory('Lotto');
+lot_json = lotto_fact.retrieve_lotto('Lotto');
 
-print lot_json
+#for lot in lot_json:
+#    lot.print
 
-#print json.dumps(lot_json)
+print json.dumps(lot_json)
