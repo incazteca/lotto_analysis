@@ -22,4 +22,8 @@ lot_json = lotto_fact.retrieve_lotto('Lotto');
 #for lot in lot_json:
 #    lot.print
 
-print json.dumps(lot_json)
+list_format = "{!s:15}{!s:10}{!s:10}"
+print list_format.format('Date','Game','Numbers')
+
+for lot in lot_json:
+    print list_format.format(lot['col1'],lot['col2'],lot['col3'])
