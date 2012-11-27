@@ -8,7 +8,8 @@ import urllib2
 
 class lotto_factory:
 
-    lotto_url_base = "http://www.illinoislottery.com/content/dam/ill/searchbyyear/";
+    #lotto_url_base = "http://www.illinoislottery.com/content/dam/ill/searchbyyear/";
+    lotto_url_base = "http://www.illinoislottery.com/lottery/data/history/winners/all/pastYear.json"
 
     # Initialize the factory
 
@@ -36,9 +37,11 @@ class lotto_factory:
 
         for result in results:
             if (result['col2'] == self._lotto_game):
-                lotto_result.append(result)
+                lotto_obj = lib.models.lotto.lotto(result['col3'],result['col1'])
+                lotto_result.append(lotto_obj)
 
-        return lotto_result
+
+        return lotto_results
 
     def retrieve_from_db(self):
         return False
