@@ -8,7 +8,6 @@ import urllib2
 
 class lotto_factory:
 
-    #lotto_url_base = "http://www.illinoislottery.com/content/dam/ill/searchbyyear/";
     lotto_url_base = "http://www.illinoislottery.com/lottery/data/history/winners/all/pastYear.json"
 
     # Initialize the factory
@@ -20,10 +19,7 @@ class lotto_factory:
 
     # Retrieve lotto
 
-    def retrieve_lotto (self,game_type):
-        if self._lotto_game is None:
-            self._lotto_game = game_type
-        
+    def retrieve_lotto (self):
         results = ''
         
         if (self._is_database_available()):
@@ -33,12 +29,12 @@ class lotto_factory:
 
         # Pull results that are only releveant to the game type
         
-        lotto_result = []
+        lotto_results = []
 
         for result in results:
             if (result['col2'] == self._lotto_game):
-                lotto_obj = lib.models.lotto.lotto(result['col3'],result['col1'])
-                lotto_result.append(lotto_obj)
+                lotto_obj = lib.models.lotto.lotto(result['col3'][0],result['col1'])
+                lotto_results.append(lotto_obj)
 
 
         return lotto_results
@@ -47,10 +43,8 @@ class lotto_factory:
         return False
 
     def retrieve_from_web_recent(self):
-        today = date.today()
-        year = today.year
 
-        lotto_url = self.lotto_url_base+str(year)+".json"
+        lotto_url = self.lotto_url_base
         lotto_results = urllib2.Request(lotto_url)
         json_result = json.loads(urllib2.urlopen(lotto_results).read())
 
