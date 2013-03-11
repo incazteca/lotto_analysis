@@ -1,14 +1,36 @@
 #!/usr/bin/env python
+"""
+lotto_analysis script.
 
+This script is a wrapper for all the lotto_analysis command. Commands are files
+that begin with lotto_analysis and then have subcommands delimited by hyphens in the
+filename. Example:
+
+The file lotto_analysis-results-lotto will be for the subcommand:
+'lotto analysis results lotto'
+"""
 import sys
 import os.path
 
-for arg in sys.argv:
-    print arg
+def usage():
+    """ Usage for the lotto_analysis command """
+    base_command = os.path.basename(sys.argv[0])
+
+    usage_text = "Usage: "+base_command
+    print usage_text
+
+    sys.exit(0)
+
+# Begin Main Script
+
+# list of directories that hold related subcommands. Not exactly needed 
+# but makes groupings of commands much easier
+subcommand_directories = ['admin','results','simulate']
+
 base_command = os.path.basename(sys.argv[0])
 
-print base_command
-print len(sys.argv)
-#command_paths = [base]
+if len(sys.argv) == 1 : usage()
 
-usage = "usage: lotto_analysis"
+print base_command
+
+

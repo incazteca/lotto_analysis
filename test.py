@@ -1,8 +1,12 @@
 #!/usr/bin/env python
 
+"""
+this is test pydoc
+"""
+
 import json
 import sys
-import lib.models.lotto
+import lib.models.lotto_games
 import lib.factories.lotto
 
 print "-"*5
