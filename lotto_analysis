@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+
 """
 lotto_analysis script.
 
@@ -7,8 +8,9 @@ that begin with lotto_analysis and then have subcommands delimited by hyphens in
 filename. Example:
 
 The file lotto_analysis-results-lotto will be for the subcommand:
-'lotto analysis results lotto'
+'lotto_analysis results lotto'
 """
+from collections import deque
 import sys
 import os.path
 
@@ -21,7 +23,7 @@ def usage():
 
     sys.exit(0)
 
-# Begin Main Script
+# -----Begin Main Script-----
 
 # list of directories that hold related subcommands. Not exactly needed 
 # but makes groupings of commands much easier
@@ -30,6 +32,12 @@ subcommand_directories = ['admin','results','simulate']
 base_command = os.path.basename(sys.argv[0])
 
 if len(sys.argv) == 1 : usage()
+
+script_args = deque( sys.argv )
+script_args.popleft()
+
+
+print script_args
 
 print base_command
 
