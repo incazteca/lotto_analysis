@@ -6,14 +6,14 @@ this is test pydoc
 
 import json
 import sys
-import lib.models.lotto_games
-import lib.factories.lotto
+from lotto_analysis import models
+from lotto_analysis import factories
 
 print "-"*5
 print "Test Factories"
 print "-"*5
 
-lotto_fact = lib.factories.lotto.lotto_factory('Lotto');
+lotto_fact = factories.lotto_factory('Lotto');
 #lot_json = lotto_fact.retrieve_lotto('Lotto');
 lot_ar = lotto_fact.retrieve_lotto();
 
