@@ -1,1 +1,3 @@
 This is a simple lotto analyzer. You can check numbers that are pulled from the Illinois lottery site or play simulations
+
+This is still a work in progress. As such, current functionality is limited to just retrieving recent lotto results.
