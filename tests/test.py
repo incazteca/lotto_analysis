@@ -6,6 +6,8 @@ this is test pydoc
 
 import json
 import sys
+sys.path[0:0] = [""]
+
 from lotto_analysis import models
 from lotto_analysis import factories
 

@@ -4,8 +4,8 @@ Retrieves lotto objects from either the json file on the Illinois lottery page
 Or from the database
 """
 from datetime import date
+from lotto_analysis import models
 import json
-import lib.models.lotto_games
 import os
 import urllib2
 
@@ -34,7 +34,7 @@ class lotto_factory:
             # Pull results only relevant to game type 
             for result in results:
                 if (result['col2'] == self._lotto_game):
-                    lotto_obj = lib.models.lotto_games.lotto(result['col3'][0],result['col1'])
+                    lotto_obj = models.lotto(result['col3'][0],result['col1'])
                     lotto_results.append(lotto_obj)
 
         # Pull results that are only releveant to the game type
