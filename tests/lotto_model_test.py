@@ -19,5 +19,15 @@ class lotto_model_test(unittest.TestCase):
         lotto_obj = models.lotto(self.num_string,self.draw_date)
         self.assertEqual(lotto_obj.get_game(),'Lotto')
 
+    def test_get_numbers(self):
+        lotto_obj = models.lotto(self.num_string,self.draw_date)
+        self.assertEqual(lotto_obj.get_numbers(),['01','02','03','04','05'])
+
+    def test_get_draw_date(self):
+        lotto_obj = models.lotto(self.num_string,self.draw_date)
+        self.assertEqual(lotto_obj.get_draw_date().year,2013)
+        self.assertEqual(lotto_obj.get_draw_date().month,4)
+        self.assertEqual(lotto_obj.get_draw_date().day,15)
+
 suite = unittest.TestLoader().loadTestsFromTestCase(lotto_model_test)
 unittest.TextTestRunner(verbosity=2).run(suite)
