@@ -10,7 +10,6 @@ sys.path[0:0] = [""]
 from lotto_analysis import models
 
 class lotto_model_test(unittest.TestCase):
-
     def setUp(self):
         self.num_string = '01-02-03-04-05'
         self.draw_date = '04/15/2013'
@@ -25,6 +24,8 @@ class lotto_model_test(unittest.TestCase):
 
     def test_get_draw_date(self):
         lotto_obj = models.lotto(self.num_string,self.draw_date)
+
+        # Ensure that draw_date is a date object
         self.assertEqual(lotto_obj.get_draw_date().year,2013)
         self.assertEqual(lotto_obj.get_draw_date().month,4)
         self.assertEqual(lotto_obj.get_draw_date().day,15)
