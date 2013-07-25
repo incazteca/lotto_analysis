@@ -11,9 +11,9 @@ class lotto:
         self.game = 'Lotto'
 
         # Parse numbers string create list of numbers
-        
+
         self.numbers = num_string.split('-')
-        
+
         # Ensure that the draw date is a date object. Y-M-D
         date_ar = draw_date.split('/')
         self.draw_date = date(int(date_ar[2]),int(date_ar[0]),int(date_ar[1]))

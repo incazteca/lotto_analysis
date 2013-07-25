@@ -25,7 +25,7 @@ def usage():
 
 # -----Begin Main Script-----
 
-# list of directories that hold related subcommands. Not exactly needed 
+# list of directories that hold related subcommands. Not exactly needed
 # but makes groupings of commands much easier
 subcommand_directories = ['admin','results','simulate']
 
@@ -40,5 +40,4 @@ script_args.popleft()
 print script_args
 
 print base_command
-
 
