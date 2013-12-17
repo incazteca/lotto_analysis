@@ -1,25 +1,28 @@
-#!/usr/bin/env python
 """
     Document contains the models for the different lotto games
 """
 from datetime import date
+import re
 
 """
-    Class for lotto game model. Also base class for other permutations of the game
+    Base lotto class
 """
-class lotto:
-    def __init__(self,num_string,draw_date):
-        self.game = 'Lotto'
+class base_lotto(object):
+    def __init__(self, game, num_string, draw_date):
+        self.game = game
 
         # Parse numbers string create list of numbers
+        self.numbers = self.parse_numbers(num_string)
 
-        self.numbers = num_string.split('-')
-
-        # Ensure that the draw date is a date object. Y-M-D
+        # Ensure that the draw date is a date object. Y-M-D, 2013-12-30
         date_ar = draw_date.split('/')
         self.draw_date = date(int(date_ar[2]),int(date_ar[0]),int(date_ar[1]))
 
-    # Accesors
+    def parse_numbers(self,nums):
+        num_parts = nums.split(',')
+        return num_parts[0].split('-')
+
+    # Accessors
     def get_game(self):
         return self.game
 
@@ -30,126 +33,64 @@ class lotto:
         return self.draw_date
 
 """
-    Class for little lotto game model.
+    Class for lotto game model
 """
-class little_lotto(lotto):
-    def __init__(self,num_string,draw_date):
-        self.game = 'Little Lotto'
+class lotto(base_lotto):
+    def __init__(self, game, num_string, draw_date):
+        super(lotto,self).__init__(game, num_string, draw_date)
 
-        # Parse numbers string create list of numbers
+        pot_extra_shot = num_string.split(',')[1]
 
-        self.numbers = num_string.split('-')
+        if ( pot_extra_shot != ''):
+            self.extra_shot = pot_extra_shot.split(':')[-1].strip()
+        else:
+            self.extra_shot = ''
 
-        # Ensure that the draw date is a date object. Y-M-D
-        date_ar = draw_date.split('/')
-        self.draw_date = date(int(date_ar[2]),int(date_ar[0]),int(date_ar[1]))
-
-    # Accesors
-    def get_game(self):
-        return self.game
-
-    def get_numbers(self):
-        return self.numbers
-
-    def get_draw_date(self):
-        return self.draw_date
+    def get_extra_shot(self):
+        return self.extra_shot
 
 """
     Class for mega millions game model.
 """
-class mega_millions(lotto):
-    def __init__(self,num_string,draw_date):
-        self.game = 'Mega Millions'
+class mega_millions(base_lotto):
+    def __init__(self, game, num_string, megaplier, draw_date):
+        super(mega_millions,self).__init__(game, num_string, draw_date)
 
-        # Parse numbers string create list of numbers
+        # Parse numbers string create list of numbers and get mega number
 
         self.numbers = num_string.split('-')
+        last_elem = self.numbers[-1].split('[')
+        self.numbers[-1] = last_elem[0]
+        self.mega = last_elem[1][:-1]
 
-        # Ensure that the draw date is a date object. Y-M-D
-        date_ar = draw_date.split('/')
-        self.draw_date = date(int(date_ar[2]),int(date_ar[0]),int(date_ar[1]))
+        # Retrieve megaplier, use regex to find megaplier digit
+        megaplier_temp = megaplier.split(':')[-1];
+
+        re_handle = re.compile('(\d)')
+        self.megaplier = re_handle.search(megaplier_temp).group(1)
 
     # Accesors
-    def get_game(self):
-        return self.game
+    def get_mega(self):
+        return self.mega
 
-    def get_numbers(self):
-        return self.numbers
-
-    def get_draw_date(self):
-        return self.draw_date
+    def get_megaplier(self):
+        return self.megaplier
 
 """
     Class for Powerball game model.
 """
-class powerball(lotto):
-    def __init__(self,num_string,draw_date):
-        self.game = 'Powerball'
+class powerball(base_lotto):
+    def __init__(self, game, num_string, draw_date):
+        super(powerball,self).__init__(game, num_string, draw_date)
+
 
         # Parse numbers string create list of numbers
 
         self.numbers = num_string.split('-')
-
-        # Ensure that the draw date is a date object. Y-M-D
-        date_ar = draw_date.split('/')
-        self.draw_date = date(int(date_ar[2]),int(date_ar[0]),int(date_ar[1]))
-
-    # Accesors
-    def get_game(self):
-        return self.game
-
-    def get_numbers(self):
-        return self.numbers
-
-    def get_draw_date(self):
-        return self.draw_date
-
-"""
-    Class for Pick 3 game model.
-"""
-class pick_3(lotto):
-    def __init__(self,num_string,draw_date):
-        self.game = 'Pick 3'
-
-        # Parse numbers string create list of numbers
-
-        self.numbers = num_string.split('-')
-
-        # Ensure that the draw date is a date object. Y-M-D
-        date_ar = draw_date.split('/')
-        self.draw_date = date(int(date_ar[2]),int(date_ar[0]),int(date_ar[1]))
+        last_elem = self.numbers[-1].split('[')
+        self.numbers[-1] = last_elem[0]
+        self.powerball = last_elem[1][:-1]
 
     # Accesors
-    def get_game(self):
-        return self.game
-
-    def get_numbers(self):
-        return self.numbers
-
-    def get_draw_date(self):
-        return self.draw_date
-
-"""
-    Class for Pick 4 game model.
-"""
-class pick_4(lotto):
-    def __init__(self,num_string,draw_date):
-        self.game = 'Pick 4'
-
-        # Parse numbers string create list of numbers
-
-        self.numbers = num_string.split('-')
-
-        # Ensure that the draw date is a date object. Y-M-D
-        date_ar = draw_date.split('/')
-        self.draw_date = date(int(date_ar[2]),int(date_ar[0]),int(date_ar[1]))
-
-    # Accesors
-    def get_game(self):
-        return self.game
-
-    def get_numbers(self):
-        return self.numbers
-
-    def get_draw_date(self):
-        return self.draw_date
+    def get_powerball(self):
+        return self.powerball
