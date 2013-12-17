@@ -22,7 +22,7 @@ class lotto_factory:
 
     # Retrieve lotto
 
-    def retrieve_lotto (self):
+    def retrieve_lotto(self):
         results = ''
         lotto_results = []
 
@@ -34,12 +34,31 @@ class lotto_factory:
             # Pull results only relevant to game type
             for result in results:
                 if (result['col2'] == self._lotto_game):
-                    lotto_obj = models.lotto(result['col3'][0],result['col1'])
+                    lotto_obj = models.lotto(self._lotto_game, result['col3'][0], result['col1'])
                     lotto_results.append(lotto_obj)
 
         # Pull results that are only releveant to the game type
 
         return lotto_results
+
+    def retrieve_powerball(self):
+        results = ''
+        powerball_results = []
+
+        if (self._is_database_available()):
+            results = self.retrieve_from_db()
+        else:
+            results = self.retrieve_from_web_recent()
+
+            # Pull results only relevant to game type
+            for result in results:
+                if (result['col2'] == self._lotto_game):
+                    pow_obj = models.powerball(self._lotto_game, result['col3'][0], result['col1'])
+                    powerball_results.append(pow_obj)
+
+        # Pull results that are only releveant to the game type
+
+        return powerball_results
 
     def retrieve_from_db(self):
         return False
